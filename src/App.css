@@ -19,7 +19,7 @@ section{
 section.num-pucks {
   text-align: center;
   align-items: center;
-  padding: 2em;
+  padding: 1em;
 }
 
 i.pucks {
@@ -32,17 +32,22 @@ p.error{
 
 .tower {
   background-color :#370617;
+  border-radius: 5%;
+  border: 1px solid #222;
   height: 8em;
   padding: 1em;
+  margin-left:1em;
   will-change: filter;
   transition: filter 300ms;
   display:flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  min-width: 4em;
+  min-width: 3em;
   max-width: 20em;
-  
+  min-height: 5em;
+  height:auto;
+  overflow-x: hidden; 
 }
 
 .tower:hover {
@@ -97,6 +102,10 @@ div.puck {
   border-radius: 20%;
   max-height: 1.5em;
 
+}
+
+div.puck:hover {
+  filter: drop-shadow(0 0 3px grey);
 }
 
 button {

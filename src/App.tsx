@@ -13,10 +13,14 @@ function App() {
   const [win, setWin] = useState(true);
 
   const increasePucks = () => {
-    setnumOfPucks(numOfPucks + 1);
+    if (numOfPucks < 12) {
+      setnumOfPucks(numOfPucks + 1);
+    }
   };
   const decreasePucks = () => {
-    setnumOfPucks(numOfPucks - 1);
+    if (numOfPucks > 2) {
+      setnumOfPucks(numOfPucks - 1);
+    }
   };
 
   useEffect(() => {
@@ -119,11 +123,15 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h2>Wieże Hanoi</h2>
+        <h2>Hanoi Towers</h2>
         <p>
-          You have to build a pile in the third box, according to those rules:
+          You have to build a pile in the third box, according to these rules:
           <ul>
             <li> Move only one puck from the top of the stack, </li>
+            <li>
+              {" "}
+              Click on the box to take puck out, click again to put it back in
+            </li>
             <li> Don't put bigger puck's on smaller ones</li>
           </ul>
         </p>
@@ -131,7 +139,7 @@ function App() {
       <p className="error">{errorMsg}</p>
       <main>
         <section>
-          <div style={{ height: 100 }}>
+          <div style={{ height: 60 }}>
             {puckOut ? <Puck index={puckOut} /> : <div> </div>}
           </div>
         </section>
@@ -151,6 +159,11 @@ function App() {
               <Puck index={i} />
             ))}
           </div>
+          <div>
+            {Array.from(Array(numOfPucks)).map(() => (
+              <div style={{ height: 47, width: 0 }}></div>
+            ))}
+          </div>
         </section>
 
         <section className="num-pucks">
@@ -166,8 +179,8 @@ function App() {
             </button>
           </div>
         </section>
-        <button onClick={solve}>solve</button>
-        <button onClick={reset}>reset</button>
+        <button onClick={solve}>Solve</button>
+        <button onClick={reset}>Reset</button>
       </main>
       {win && (
         <button onClick={reset}>
