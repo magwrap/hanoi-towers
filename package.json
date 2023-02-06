@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start":"react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "react-scripts build",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
