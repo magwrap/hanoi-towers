@@ -36,11 +36,12 @@ p.error{
   padding: 1em;
   will-change: filter;
   transition: filter 300ms;
-  margin: 3em;
   display:flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+  min-width: 4em;
+  max-width: 20em;
   
 }
 

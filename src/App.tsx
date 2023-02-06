@@ -121,7 +121,7 @@ function App() {
       <header>
         <h2>Wieże Hanoi</h2>
         <p>
-          You have to build a pyre on third tower, according to those rules:
+          You have to build a pile in the third box, according to those rules:
           <ul>
             <li> Move only one puck from the top of the stack, </li>
             <li> Don't put bigger puck's on smaller ones</li>
@@ -131,7 +131,11 @@ function App() {
       <p className="error">{errorMsg}</p>
       <main>
         <section>
-          {puckOut ? <Puck index={puckOut} /> : null}
+          <div style={{ height: 100 }}>
+            {puckOut ? <Puck index={puckOut} /> : <div> </div>}
+          </div>
+        </section>
+        <section>
           <div className="tower" id="tower1" onClick={() => onTowerClick(1)}>
             {towerA.map((i) => (
               <Puck index={i} />
@@ -162,7 +166,7 @@ function App() {
             </button>
           </div>
         </section>
-        <button onClick={solve}>solove</button>
+        <button onClick={solve}>solve</button>
         <button onClick={reset}>reset</button>
       </main>
       {win && (
