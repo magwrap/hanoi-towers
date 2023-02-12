@@ -1,11 +1,12 @@
 {
-  "homepage": "https://magwrap.github.io",
+  "homepage": "https://magwrap.github.io/hanoi-towers",
   "name": "hanoi-towers",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
