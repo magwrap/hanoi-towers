@@ -25,6 +25,7 @@ interface PuckProps {
 const Puck: React.FC<PuckProps> = ({ index }) => {
   return (
     <div
+      key={index}
       className="puck"
       style={{
         width: 20 * index,

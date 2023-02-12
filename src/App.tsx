@@ -47,7 +47,6 @@ function App() {
 
   const onTowerClick = (towerNum: number) => {
     setErrorMsg("");
-    console.log(puckOut);
     if (!puckOut) {
       putOut(towerNum);
     } else {
@@ -101,23 +100,71 @@ function App() {
   };
 
   const checkWin = () => {
-    console.log("len ", towerC.length);
+    console.log("check win len ", towerC.length);
     if (towerC.length === numOfPucks - 1) {
       setWin(true);
     }
   };
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-  const solve_hanoi = (n: number, A: number[], B: number[], C: number[]) => {
+  const putOutAsync = (n: number) => {
+    putOut(n);
+    delay(2000);
+    return new Promise((resolve, reject) => {
+      useEffect(() => {
+        if (puckOut) {
+          resolve(true);
+        }
+      }, [puckOut]);
+    });
+  };
+
+  const insertPuckAsync = (n: number) => {
+    insertPuck(n);
+  };
+
+  const waitForPuckIn = async () => {
+    //waits for the moment till puck is taken out
+    if (puckOut != 0) {
+      console.log("exiting puck in");
+      return true;
+    }
+    await delay(3000);
+    waitForPuckIn();
+  };
+
+  const waitForPuckOut = async () => {
+    //waits for the moment till you are able to pull puck out
+    if (puckOut == 0) {
+      console.log("exiting puck out");
+      return true;
+    }
+    await delay(3000);
+    waitForPuckOut();
+  };
+
+  const solve_hanoi = async (n: number, A: number, B: number, C: number) => {
+    console.log("executing...");
+    if (n !== numOfPucks) {
+      await delay(2100);
+    }
     if (n > 0) {
       solve_hanoi(n - 1, A, C, B);
-      let popped = A.shift();
-      if (popped) C.unshift(popped);
-      solve_hanoi(n - 1, B, A, C);
+      let go = await waitForPuckOut();
+      putOut(A);
+      go = false;
+      //if puckOut != 0 continue
+      go = await waitForPuckIn();
+      if (go) insertPuck(C);
+      go = false;
+      //if puckOut == 0 continue
+      go = await waitForPuckOut();
+      if (go) solve_hanoi(n - 1, B, A, C);
     }
   };
 
   const solve = () => {
-    solve_hanoi(numOfPucks, towerA, towerB, towerC);
+    solve_hanoi(numOfPucks, 1, 2, 3);
   };
 
   return (
@@ -129,7 +176,6 @@ function App() {
           <ul>
             <li> Move only one puck from the top of the stack, </li>
             <li>
-              {" "}
               Click on the box to take puck out, click again to put it back in
             </li>
             <li> Don't put bigger puck's on smaller ones</li>
@@ -160,8 +206,8 @@ function App() {
             ))}
           </div>
           <div>
-            {Array.from(Array(numOfPucks)).map(() => (
-              <div style={{ height: 47, width: 0 }}></div>
+            {Array.from(Array(numOfPucks)).map((i: number) => (
+              <div style={{ height: 47, width: 0 }} key={i}></div>
             ))}
           </div>
         </section>
